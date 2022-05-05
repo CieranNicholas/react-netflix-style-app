@@ -1,0 +1,46 @@
+.navContainer {
+  transition: all ease 0.2s;
+  position: fixed;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+
+  img {
+    height: 20px;
+    margin-right: 20px;
+    margin-left: 28px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-right: 10px;
+    font-size: 9px;
+    color: white;
+    transition: all ease 0.2s;
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    margin-right: 72.5%;
+  }
+
+  .nav-right {
+    display: flex;
+
+    .search-icon-container {
+      display: grid;
+      place-items: center;
+    }
+  }
+}
+
+.navContainer-black {
+  background-color: #111;
+}

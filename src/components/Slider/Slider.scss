@@ -1,0 +1,63 @@
+.netflix-slider {
+  transition: all ease 250ms;
+  .swiper-container {
+    width: 95%;
+    height: 100%;
+  }
+
+  .swiper-button-next {
+    color: white;
+  }
+
+  .swiper-button-prev {
+    color: white;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  p {
+    grid-column: 1;
+    grid-row: 1;
+    margin-left: 5px;
+    font-size: 10px;
+    text-align: left;
+    text-shadow: #000;
+  }
+
+  .categoryTitleContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 95%;
+    margin: auto;
+  }
+
+  .swiper-wrapper {
+    padding: 10px 0;
+  }
+
+  .swiper-slide {
+    display: grid !important;
+    transition: 250ms all;
+    align-items: end;
+    justify-items: left;
+
+    &:hover {
+      transform: scale(1.2);
+      z-index: 1;
+    }
+
+    &:first-child:hover {
+      margin: 0 40px;
+    }
+
+    &:last-child:hover {
+      margin: 0 -40px;
+    }
+  }
+}

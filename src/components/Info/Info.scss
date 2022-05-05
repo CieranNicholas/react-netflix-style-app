@@ -1,0 +1,87 @@
+.ReactModal__Overlay {
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.068) !important;
+}
+
+.ReactModal__Content {
+  background: rgb(11 11 11) !important;
+  border: none !important;
+}
+
+.modalContent {
+  // overflow: scroll;
+  max-height: 609px;
+  overflow-x: hidden;
+
+  .modalHeader {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .modalbody {
+    padding: 20px;
+
+    .modal-body-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+
+      p:first-child {
+        margin-right: 10px;
+        margin-bottom: 0;
+      }
+
+      .modal-release-date {
+        font-size: 8px;
+        color: #ffffff7d;
+      }
+    }
+
+    p {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .genres {
+      display: flex;
+      justify-content: flex-start;
+
+      div {
+        padding: 5px;
+        border: solid white 1px;
+        border-radius: 25px;
+        margin-right: 10px;
+        font-size: 10px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .modal-overview {
+      font-size: 10px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      div {
+        transition: all ease 0.2s;
+        flex-grow: 0;
+        flex-shrink: 1;
+        flex-basis: calc(24% - 1em);
+        height: 170px;
+        margin-bottom: 1em;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 10px;
+      }
+    }
+  }
+}
