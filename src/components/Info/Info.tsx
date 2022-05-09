@@ -39,24 +39,32 @@ export default function Info({ open, closeModal, modalInfo, similar }: Props) {
 
   useEffect(() => {
     async function getData() {
-      const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/${modalInfo.id}/videos?api_key=${process.env.REACT_APP_API_KEY}`
-      );
+      // if modalInfo.release_date is not null
+      if (modalInfo.release_date !== undefined) {
+        const res = await axios.get(
+          `https://api.themoviedb.org/3/movie/${modalInfo.id}/videos?api_key=${process.env.REACT_APP_API_KEY}`
+        );
+        setVideoUrl(res.data.results[0].key);
+      } else {
+        const res = await axios.get(
+          `https://api.themoviedb.org/3/tv/${modalInfo.id}/videos?api_key=${process.env.REACT_APP_API_KEY}`
+        );
+        setVideoUrl(res.data.results[0].key);
+      }
 
       const genresRes = await axios.get(
         `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}`
       );
-
       const genreIds = modalInfo.genre_ids.map((id: number) => {
         const genre = genresRes.data.genres.find((genre: any) => {
           return genre.id === id;
         });
-        return genre.name;
+        if (genre !== undefined) {
+          return genre.name;
+        }
       });
 
       setGenreNames(genreIds);
-
-      setVideoUrl(res.data.results[0].key);
     }
     getData();
   }, [open]);
@@ -68,10 +76,10 @@ export default function Info({ open, closeModal, modalInfo, similar }: Props) {
       style={customStyles}
       contentLabel='Movie Info'
       onAfterOpen={() => {
-        document.body.style.overflow = "hidden";
+        // document.body.style.overflow = "hidden";
       }}
       onAfterClose={() => {
-        document.body.style.overflow = "auto";
+        // document.body.style.overflow = "auto";
       }}
     >
       <div className='modalContent'>
@@ -85,15 +93,19 @@ export default function Info({ open, closeModal, modalInfo, similar }: Props) {
         />
         <div className='modalbody'>
           <div className='modal-body-header'>
-            <p>{modalInfo.title}</p>
+            <p>{modalInfo.title || modalInfo.original_name}</p>
             <p className='modal-release-date'>
-              {modalInfo.release_date.split("-")[0]}
+              {modalInfo.release_date
+                ? modalInfo.release_date.split("-")[0]
+                : modalInfo.first_air_date.split("-")[0]}
             </p>
           </div>
           <div className='genres'>
-            {genreNames.map((genre: string) => (
-              <div key={genre}>{genre}</div>
-            ))}
+            {genreNames.map((genre: string) => {
+              if (genre !== undefined) {
+                return <div key={genre}>{genre}</div>;
+              }
+            })}
           </div>
           <p>{modalInfo.vote_avarage}</p>
 
