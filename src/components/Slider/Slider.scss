@@ -24,9 +24,9 @@
     grid-column: 1;
     grid-row: 1;
     margin-left: 5px;
-    font-size: 10px;
+    font-size: 15px;
     text-align: left;
-    text-shadow: #000;
+    text-shadow: black 0px 0px 1px;
   }
 
   .categoryTitleContainer {
@@ -35,6 +35,10 @@
     align-items: center;
     width: 95%;
     margin: auto;
+  }
+
+  .swiper {
+    width: 95%;
   }
 
   .swiper-wrapper {
@@ -48,16 +52,9 @@
     justify-items: left;
 
     &:hover {
-      transform: scale(1.2);
+      transform: scale(0.9);
       z-index: 1;
-    }
-
-    &:first-child:hover {
-      margin: 0 40px;
-    }
-
-    &:last-child:hover {
-      margin: 0 -40px;
+      border: none;
     }
   }
 }
