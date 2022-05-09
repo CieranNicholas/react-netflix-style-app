@@ -31,7 +31,6 @@ export default function Slider({
   getSimilarMovies,
 }: Props) {
   const [data, setData] = useState<any>([]);
-
   const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
@@ -50,36 +49,53 @@ export default function Slider({
       <div className='categoryTitleContainer'>
         <h4>{title}</h4>
       </div>
-
       <Swiper
-        cssMode={true}
+        spaceBetween={10}
+        slidesPerView={3}
+        slidesPerGroup={3}
+        breakpoints={{
+          100: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+            allowTouchMove: true,
+            navigation: false,
+          },
+          1124: {
+            slidesPerView: 6,
+            slidesPerGroup: 6,
+            allowTouchMove: false,
+          },
+        }}
         navigation={true}
         loop={true}
-        loopFillGroupWithBlank={true}
-        slidesPerView={6}
-        spaceBetween={10}
-        slidesPerGroup={1}
         modules={[Navigation]}
-        className='swiper-container mySwiper'
       >
-        <div className='swiper-wrapper'>
-          {data.map((movie: any) => {
-            return (
-              <SwiperSlide className='swiper-slide' key={movie.id}>
-                <img
-                  src={`http://image.tmdb.org/t/p/${imageSize}/${movie.backdrop_path}`}
-                  alt={`${movie.original_title} poster`}
-                  onClick={() => {
-                    openModal();
-                    setModalInfo(movie);
-                    getSimilarMovies(movie.id);
-                  }}
-                />
-                <p>{movie.original_title}</p>
-              </SwiperSlide>
-            );
-          })}
-        </div>
+        {data.map((movie: any) => (
+          <SwiperSlide key={movie.id}>
+            {movie.backdrop_path !== null ? (
+              <img
+                src={`http://image.tmdb.org/t/p/${imageSize}/${movie.backdrop_path}`}
+                alt={`${movie.original_title} poster`}
+                onClick={() => {
+                  openModal();
+                  setModalInfo(movie);
+                  getSimilarMovies(movie.id);
+                }}
+              />
+            ) : (
+              <img
+                src='https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png'
+                alt={`${movie.original_title} poster`}
+                onClick={() => {
+                  openModal();
+                  setModalInfo(movie);
+                  getSimilarMovies(movie.id);
+                }}
+              />
+            )}
+            <p>{movie.original_title || movie.original_name}</p>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
