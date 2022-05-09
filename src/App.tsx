@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+// components
 import Navbar from "./components/Navbar/Navbar";
-import Banner from "./components/Banner/Banner";
-import Slider from "./components/Slider/Slider";
 import Info from "./components/Info/Info";
+
+// pages
+import Homepage from "./pages/homepage/Index";
+import Movies from "./pages/movies/Index";
+import TV from "./pages/tv/Index";
+import ErrorPage from "./pages/errorPage/ErrorPage";
 
 import axios from "axios";
 
 import "./App.scss";
-
-// todo:
-// nav bar is dissapearing all of a sudden?
 
 export default function App() {
   const [open, setOpen] = useState<boolean>(false);
@@ -37,12 +40,19 @@ export default function App() {
     setSimilar([]);
   };
 
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}`
+      )
+      .then((res: any) => {
+        console.log(res);
+      });
+  }, []);
+
   return (
-    <>
-      <div
-        className='app'
-        style={open ? { filter: `blur(5px)` } : { filter: `blur(0)` }}
-      >
+    <Router>
+      <div className='app'>
         {open && (
           <Info
             open={open}
@@ -52,42 +62,21 @@ export default function App() {
           />
         )}
         <Navbar />
-        <Banner />
-        <Slider
-          url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}`}
-          imageSize='original'
-          title='Latest Movies'
-          openModal={openModal}
-          setModalInfo={setModalInfo}
-          getSimilarMovies={getSimilarMovies}
-        />
-        <Slider
-          url={`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}`}
-          imageSize='original'
-          title='Popular Movies'
-          openModal={openModal}
-          setModalInfo={setModalInfo}
-          getSimilarMovies={getSimilarMovies}
-        />
-        <Slider
-          url={`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}`}
-          imageSize='original'
-          title='Movies Coming Soon'
-          openModal={openModal}
-          setModalInfo={setModalInfo}
-          getSimilarMovies={getSimilarMovies}
-        />
-        <Slider
-          url={`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_API_KEY}`}
-          imageSize='original'
-          title='Movies Trending This Week'
-          openModal={openModal}
-          setModalInfo={setModalInfo}
-          getSimilarMovies={getSimilarMovies}
-        />
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <Homepage
+                openModal={openModal}
+                setModalInfo={setModalInfo}
+                getSimilarMovies={getSimilarMovies}
+              />
+            }
+          />
+          <Route path='/movies' element={<Movies />} />
+          <Route path='*' element={<ErrorPage />} />
+        </Routes>
       </div>
-    </>
+    </Router>
   );
 }
-
-// style={{ backgroundImage: `url(${imgUrl}${movie.poster_path})` }}
