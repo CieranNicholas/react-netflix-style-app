@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // components
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 import Info from "./components/Info/Info";
 
 // pages
 import Homepage from "./pages/homepage/Index";
 import Movies from "./pages/movies/Index";
-import TV from "./pages/tv/Index";
+import Tv from "./pages/tv/Index";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 
 import axios from "axios";
@@ -73,9 +74,29 @@ export default function App() {
               />
             }
           />
-          <Route path='/movies' element={<Movies />} />
+          <Route
+            path='/movies'
+            element={
+              <Movies
+                openModal={openModal}
+                setModalInfo={setModalInfo}
+                getSimilarMovies={getSimilarMovies}
+              />
+            }
+          />
+          <Route
+            path='/tv'
+            element={
+              <Tv
+                openModal={openModal}
+                setModalInfo={setModalInfo}
+                getSimilarMovies={getSimilarMovies}
+              />
+            }
+          />
           <Route path='*' element={<ErrorPage />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
