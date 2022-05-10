@@ -1,0 +1,22 @@
+.footerContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10rem;
+
+  .footerIconContainer {
+    font-size: 3rem;
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+    transition: all ease 0.5s;
+    svg:hover {
+      color: rgb(109, 109, 109);
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
