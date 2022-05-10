@@ -47,7 +47,9 @@ export default function Navbar() {
     <>
       <nav className={`navContainer ${show && "navContainer-black"}`}>
         <div className='navImageContainer'>
-          <img src={notflix} alt='notflix banner' />
+          <Link to='/'>
+            <img src={notflix} alt='notflix banner' />
+          </Link>
         </div>
         {!showMenu && (
           <div className='navLinks'>
