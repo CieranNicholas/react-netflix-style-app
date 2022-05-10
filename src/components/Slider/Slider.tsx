@@ -53,12 +53,12 @@ export default function Slider({
         spaceBetween={10}
         slidesPerView={3}
         slidesPerGroup={3}
+        navigation={true}
         breakpoints={{
           100: {
             slidesPerView: 3,
             slidesPerGroup: 3,
             allowTouchMove: true,
-            navigation: false,
           },
           1124: {
             slidesPerView: 6,
@@ -66,7 +66,6 @@ export default function Slider({
             allowTouchMove: false,
           },
         }}
-        navigation={true}
         loop={true}
         modules={[Navigation]}
       >
