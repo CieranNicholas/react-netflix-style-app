@@ -14,7 +14,11 @@ export default function Homepage({
 }: props) {
   return (
     <div>
-      <Banner />
+      <Banner
+        openModal={openModal}
+        setModalInfo={setModalInfo}
+        getSimilarMovies={getSimilarMovies}
+      />
       <Slider
         url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}`}
         imageSize='w780'

@@ -9,7 +9,17 @@ function truncate(str: string, n: number) {
   return str?.length > n ? str.substr(0, n - 1) + "..." : str;
 }
 
-export default function Banner() {
+interface props {
+  openModal: () => void;
+  setModalInfo: React.Dispatch<React.SetStateAction<string>>;
+  getSimilarMovies: (id: number) => void;
+}
+
+export default function Banner({
+  openModal,
+  setModalInfo,
+  getSimilarMovies,
+}: props) {
   const [movie, setMovie] = useState<any>([]);
 
   useEffect(() => {
@@ -27,6 +37,12 @@ export default function Banner() {
     fetchData();
   }, []);
 
+  const ButtonHandler = () => {
+    openModal();
+    setModalInfo(movie);
+    getSimilarMovies(movie.id);
+  };
+
   return (
     <header
       className='banner'
@@ -41,7 +57,9 @@ export default function Banner() {
           {movie?.title || movie?.name || movie?.original_name}
         </h1>
         <div className='banner-buttons'>
-          <button className='banner-button'>Play</button>
+          <button className='banner-button' onClick={ButtonHandler}>
+            Info
+          </button>
         </div>
 
         <h1 className='banner-description'>{truncate(movie?.overview, 150)}</h1>
