@@ -8,6 +8,9 @@ import ReactPlayer from "react-player";
 
 import { IoIosCloseCircle } from "react-icons/io";
 import axios from "axios";
+import Movies from "../../pages/movies/Index";
+
+import { AiFillStar } from "react-icons/ai";
 
 const customStyles = {
   content: {
@@ -30,16 +33,26 @@ interface Props {
   closeModal: () => void;
   modalInfo: any;
   similar: any;
+  setModalInfo: React.Dispatch<React.SetStateAction<[]>>;
+  getSimilarMovies: (id: number) => void;
+  openModal: () => void;
 }
 
-export default function Info({ open, closeModal, modalInfo, similar }: Props) {
+export default function Info({
+  open,
+  closeModal,
+  modalInfo,
+  similar,
+  setModalInfo,
+  openModal,
+  getSimilarMovies,
+}: Props) {
   const [videoUrl, setVideoUrl] = useState("");
 
   const [genreNames, setGenreNames] = useState<any>([]);
 
   useEffect(() => {
     async function getData() {
-      // if modalInfo.release_date is not null
       if (modalInfo.release_date !== undefined) {
         const res = await axios.get(
           `https://api.themoviedb.org/3/movie/${modalInfo.id}/videos?api_key=${process.env.REACT_APP_API_KEY}`
@@ -63,11 +76,24 @@ export default function Info({ open, closeModal, modalInfo, similar }: Props) {
           return genre.name;
         }
       });
-
       setGenreNames(genreIds);
     }
     getData();
   }, [open]);
+
+  const SetVideo = async (movie: any) => {
+    if (movie.release_date !== undefined) {
+      const res = await axios.get(
+        `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${process.env.REACT_APP_API_KEY}`
+      );
+      setVideoUrl(res.data.results[0].key);
+    } else {
+      const res = await axios.get(
+        `https://api.themoviedb.org/3/tv/${movie.id}/videos?api_key=${process.env.REACT_APP_API_KEY}`
+      );
+      setVideoUrl(res.data.results[0].key);
+    }
+  };
 
   return (
     <Modal
@@ -100,6 +126,11 @@ export default function Info({ open, closeModal, modalInfo, similar }: Props) {
                 : modalInfo.first_air_date.split("-")[0]}
             </p>
           </div>
+          <p className='rating'>
+            <AiFillStar />
+            {modalInfo.vote_average}
+          </p>
+
           <div className='genres'>
             {genreNames.map((genre: string) => {
               if (genre !== undefined) {
@@ -107,7 +138,6 @@ export default function Info({ open, closeModal, modalInfo, similar }: Props) {
               }
             })}
           </div>
-          <p>{modalInfo.vote_avarage}</p>
 
           <p className='modal-overview'>{modalInfo.overview}</p>
 
@@ -130,6 +160,16 @@ export default function Info({ open, closeModal, modalInfo, similar }: Props) {
                       const el = e.target;
                       el.style.transform = "scale(1.0)";
                       el.style.zIndex = "0";
+                    }}
+                    onClick={() => {
+                      // SetVideo(movie);
+                      // setModalInfo(movie);
+                      closeModal();
+                      setTimeout(() => {
+                        openModal();
+                        setModalInfo(movie);
+                        getSimilarMovies(movie.id);
+                      }, 500);
                     }}
                   ></div>
                 ))}

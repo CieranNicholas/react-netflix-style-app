@@ -39,7 +39,7 @@ export default function Slider({
       setData(request.data.results);
       setTimeout(() => {
         setOpacity(100);
-      }, 250);
+      }, 500);
     }
     getdata();
   }, []);
@@ -92,6 +92,7 @@ export default function Slider({
                 }}
               />
             )}
+            <div className='imageGradient' />
             <p>{movie.original_title || movie.original_name}</p>
           </SwiperSlide>
         ))}

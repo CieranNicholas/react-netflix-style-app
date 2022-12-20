@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Navbar.scss";
 
@@ -12,7 +12,12 @@ import { CgMenuRound, CgCloseO } from "react-icons/cg";
 
 import notflix from "./notflix.png";
 
-export default function Navbar() {
+interface Types {
+  setSearchData: any;
+  searchData: any;
+}
+
+export default function Navbar({ setSearchData, searchData }: Types) {
   const [show, handleShow] = useState<boolean>(false);
 
   const [showSearch, setShowSearch] = useState<boolean>(false);
@@ -23,11 +28,19 @@ export default function Navbar() {
 
   const mobileNavLinks = useRef<HTMLDivElement>(null);
 
+  const navigate = useNavigate();
+
   document.addEventListener("keydown", (event: any) => {
     if (event.key === "Escape") {
       setShowSearch(false);
     }
   });
+
+  useEffect(() => {
+    if (searchData !== "") {
+      navigate("/search");
+    }
+  }, [searchData]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -56,7 +69,6 @@ export default function Navbar() {
             <Link to='/'>Home</Link>
             <Link to='/movies'>Movies</Link>
             <Link to='/tv'>TV Shows</Link>
-            <Link to='/new-and-popular'>New and Popular</Link>
           </div>
         )}
 
@@ -67,6 +79,7 @@ export default function Navbar() {
               className='searchInput'
               ref={searchInput}
               onBlur={() => setShowSearch(false)}
+              onChange={(e: any) => setSearchData(e.target.value)}
             />
           ) : null}
 
@@ -99,9 +112,6 @@ export default function Navbar() {
         </Link>
         <Link to='/tv' onClick={openMenu}>
           TV Shows
-        </Link>
-        <Link to='/new-and-popular' onClick={openMenu}>
-          New and Popular
         </Link>
       </div>
     </>

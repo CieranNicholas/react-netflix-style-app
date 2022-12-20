@@ -8,6 +8,12 @@
   z-index: 2;
   align-items: center;
 
+  background: linear-gradient(
+    180deg,
+    rgba(17, 17, 17, 1) 0%,
+    rgb(17 17 17 / 0%) 100%
+  );
+
   transition: all ease 0.5s;
 
   .navImageContainer {
@@ -69,6 +75,7 @@
   }
 
   .searchActive {
+    transition: opacity ease 250ms;
     opacity: 100%;
   }
 
@@ -115,6 +122,7 @@
   height: auto;
   opacity: 100%;
   pointer-events: all;
+  z-index: 2;
 }
 
 .navContainer-black {

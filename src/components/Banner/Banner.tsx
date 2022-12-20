@@ -21,6 +21,7 @@ export default function Banner({
   getSimilarMovies,
 }: props) {
   const [movie, setMovie] = useState<any>([]);
+  const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -33,6 +34,10 @@ export default function Banner({
           Math.floor(Math.random() * request.data.results.length - 1)
         ]
       );
+      setTimeout(() => {
+        setOpacity(100);
+      }, 500);
+      // setOpacity(100);
     }
     fetchData();
   }, []);
@@ -50,6 +55,7 @@ export default function Banner({
         backgroundSize: "cover",
         backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie?.backdrop_path})`,
         backgroundPosition: "center center",
+        opacity: `${opacity}%`,
       }}
     >
       <div className='banner-content'>

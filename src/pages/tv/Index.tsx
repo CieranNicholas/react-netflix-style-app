@@ -17,41 +17,25 @@ export default function Tv({
     <div className='tvContainer'>
       <div className='tvSpacer'></div>
       <Slider
-        url={`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}`}
+        url={`https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}`}
         imageSize='w780'
-        title='Latest Movies'
+        title='Top Rated TV Shows'
         openModal={openModal}
         setModalInfo={setModalInfo}
         getSimilarMovies={getSimilarMovies}
       />
       <Slider
-        url={`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}`}
+        url={`https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}`}
         imageSize='w780'
-        title='Popular Movies'
+        title='Popular TV Shows'
         openModal={openModal}
         setModalInfo={setModalInfo}
         getSimilarMovies={getSimilarMovies}
       />
       <Slider
-        url={`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}`}
+        url={`https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}`}
         imageSize='w780'
-        title='Movies Coming Soon'
-        openModal={openModal}
-        setModalInfo={setModalInfo}
-        getSimilarMovies={getSimilarMovies}
-      />
-      <Slider
-        url={`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_API_KEY}`}
-        imageSize='w780'
-        title='Movies Trending This Week'
-        openModal={openModal}
-        setModalInfo={setModalInfo}
-        getSimilarMovies={getSimilarMovies}
-      />
-      <Slider
-        url={`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}`}
-        imageSize='w780'
-        title='Top Rated Movies'
+        title='Latest TV Shows'
         openModal={openModal}
         setModalInfo={setModalInfo}
         getSimilarMovies={getSimilarMovies}

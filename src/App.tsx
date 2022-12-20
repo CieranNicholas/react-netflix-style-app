@@ -11,6 +11,7 @@ import Homepage from "./pages/homepage/Index";
 import Movies from "./pages/movies/Index";
 import Tv from "./pages/tv/Index";
 import ErrorPage from "./pages/errorPage/ErrorPage";
+import Search from "./pages/search/Index";
 
 import axios from "axios";
 
@@ -22,6 +23,8 @@ export default function App() {
   const [modalInfo, setModalInfo] = useState<any>([]);
 
   const [similar, setSimilar] = useState<any>([]);
+
+  const [searchData, setSearchData] = useState<any>("");
 
   async function getSimilarMovies(id: number) {
     const res = await axios.get(
@@ -37,19 +40,19 @@ export default function App() {
 
   const closeModal = () => {
     setOpen(false);
-    modalInfo([]);
+    setModalInfo([]);
     setSimilar([]);
   };
 
-  useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}`
-      )
-      .then((res: any) => {
-        console.log(res);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.REACT_APP_API_KEY}`
+  //     )
+  //     .then((res: any) => {
+
+  //     });
+  // }, []);
 
   return (
     <Router>
@@ -59,10 +62,13 @@ export default function App() {
             open={open}
             closeModal={closeModal}
             modalInfo={modalInfo}
+            setModalInfo={setModalInfo}
             similar={similar}
+            getSimilarMovies={getSimilarMovies}
+            openModal={openModal}
           />
         )}
-        <Navbar />
+        <Navbar setSearchData={setSearchData} searchData={searchData} />
         <Routes>
           <Route
             path='/'
@@ -88,6 +94,18 @@ export default function App() {
             path='/tv'
             element={
               <Tv
+                openModal={openModal}
+                setModalInfo={setModalInfo}
+                getSimilarMovies={getSimilarMovies}
+              />
+            }
+          />
+          <Route
+            path='/search'
+            element={
+              <Search
+                setSearchData={setSearchData}
+                searchData={searchData}
                 openModal={openModal}
                 setModalInfo={setModalInfo}
                 getSimilarMovies={getSimilarMovies}
